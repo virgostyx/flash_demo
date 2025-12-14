@@ -1,0 +1,235 @@
+<!-- Demo page to test flash messages -->
+<!-- Save as: app/views/flash_demo/index.html.erb -->
+
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="bg-white rounded-lg shadow-xl p-8 mb-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-2">
+        Flash Messages Component Demo
+      </h1>
+      <p class="text-gray-600 text-lg">
+        Test all flash message types and features
+      </p>
+    </div>
+
+    <!-- Test Sections -->
+    <div class="space-y-8">
+
+      <!-- Basic Flash Types -->
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+          <svg class="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+          </svg>
+          Basic Flash Types (with redirect)
+        </h2>
+        <p class="text-gray-600 mb-4">These use traditional flash + redirect pattern</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <%= button_to "✅ Success Message",
+                        flash_demo_success_path,
+                        method: :post,
+                        form: { data: { turbo: false } },
+                        class: "px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium shadow-sm hover:shadow-md" %>
+
+          <%= button_to "❌ Error Message",
+                        flash_demo_error_path,
+                        method: :post,
+                        class: "px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium shadow-sm hover:shadow-md" %>
+
+          <%= button_to "⚠️ Warning Message",
+                        flash_demo_warning_path,
+                        method: :post,
+                        class: "px-6 py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors font-medium shadow-sm hover:shadow-md" %>
+
+          <%= button_to "ℹ️ Info Message",
+                        flash_demo_info_path,
+                        method: :post,
+                        class: "px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm hover:shadow-md" %>
+        </div>
+      </div>
+
+      <!-- Rails Standard Types -->
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+          <svg class="w-6 h-6 mr-2 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+          </svg>
+          Rails Standard Types
+        </h2>
+        <p class="text-gray-600 mb-4">Test standard Rails flash types (:notice and :alert)</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <%= button_to "📢 :notice (shows as success)",
+                        flash_demo_notice_path,
+                        method: :post,
+                        class: "px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium shadow-sm hover:shadow-md" %>
+
+          <%= button_to "🚨 :alert (shows as warning)",
+                        flash_demo_alert_path,
+                        method: :post,
+                        class: "px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors font-medium shadow-sm hover:shadow-md" %>
+        </div>
+      </div>
+
+      <!-- Turbo Stream Tests -->
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+          <svg class="w-6 h-6 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          Turbo Stream (AJAX - no page reload)
+        </h2>
+        <p class="text-gray-600 mb-4">These use Turbo Streams for dynamic insertion without page reload</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <%= button_to "✅ Success (AJAX)",
+                        flash_demo_success_path,
+                        method: :post,
+                        form: { data: { turbo_frame: "_top" } },
+                        class: "px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium shadow-sm hover:shadow-md border-2 border-green-700" %>
+
+          <%= button_to "❌ Error (AJAX)",
+                        flash_demo_error_path,
+                        method: :post,
+                        form: { data: { turbo_frame: "_top" } },
+                        class: "px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium shadow-sm hover:shadow-md border-2 border-red-700" %>
+
+          <%= button_to "⚠️ Warning (AJAX)",
+                        flash_demo_warning_path,
+                        method: :post,
+                        form: { data: { turbo_frame: "_top" } },
+                        class: "px-6 py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors font-medium shadow-sm hover:shadow-md border-2 border-yellow-700" %>
+
+          <%= button_to "ℹ️ Info (AJAX)",
+                        flash_demo_info_path,
+                        method: :post,
+                        form: { data: { turbo_frame: "_top" } },
+                        class: "px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm hover:shadow-md border-2 border-blue-700" %>
+        </div>
+      </div>
+
+      <!-- Special Features -->
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+          <svg class="w-6 h-6 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+          </svg>
+          Special Features
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <%= button_to "📚 Multiple Messages at Once",
+                        flash_demo_multiple_path,
+                        method: :post,
+                        class: "px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium shadow-sm hover:shadow-md" %>
+
+          <%= button_to "⏱️ Custom Duration (10s)",
+                        flash_demo_custom_duration_path,
+                        method: :post,
+                        form: { data: { turbo_frame: "_top" } },
+                        class: "px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium shadow-sm hover:shadow-md border-2 border-indigo-700" %>
+
+          <%= button_to "⚡ Quick Dismiss (2s)",
+                        flash_demo_quick_dismiss_path,
+                        method: :post,
+                        form: { data: { turbo_frame: "_top" } },
+                        class: "px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors font-medium shadow-sm hover:shadow-md border-2 border-pink-700" %>
+
+          <%= button_to "📝 Long Message Test",
+                        flash_demo_long_message_path,
+                        method: :post,
+                        class: "px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium shadow-sm hover:shadow-md" %>
+        </div>
+      </div>
+
+      <!-- Instructions -->
+      <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6">
+        <h3 class="text-lg font-bold text-blue-900 mb-3 flex items-center">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          Testing Tips
+        </h3>
+        <ul class="space-y-2 text-blue-800">
+          <li class="flex items-start">
+            <span class="mr-2">•</span>
+            <span><strong>Hover over messages</strong> to pause auto-dismiss timer</span>
+          </li>
+          <li class="flex items-start">
+            <span class="mr-2">•</span>
+            <span><strong>Click the X button</strong> to manually dismiss any message</span>
+          </li>
+          <li class="flex items-start">
+            <span class="mr-2">•</span>
+            <span><strong>Buttons with borders</strong> use Turbo Streams (no page reload)</span>
+          </li>
+          <li class="flex items-start">
+            <span class="mr-2">•</span>
+            <span><strong>Regular buttons</strong> use traditional redirect (full page reload)</span>
+          </li>
+          <li class="flex items-start">
+            <span class="mr-2">•</span>
+            <span>Messages auto-dismiss after <strong>5 seconds</strong> (customizable)</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Color Reference -->
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Color Reference</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+            <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <div>
+              <div class="font-semibold text-green-800">Success / Notice</div>
+              <div class="text-sm text-green-600">Green - Positive actions</div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </div>
+            <div>
+              <div class="font-semibold text-red-800">Error / Danger</div>
+              <div class="text-sm text-red-600">Red - Errors, failures</div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div class="w-10 h-10 bg-yellow-600 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="font-semibold text-yellow-800">Warning / Alert</div>
+              <div class="text-sm text-yellow-600">Yellow - Caution needed</div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="font-semibold text-blue-800">Info</div>
+              <div class="text-sm text-blue-600">Blue - Information</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
