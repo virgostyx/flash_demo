@@ -11,7 +11,7 @@ class FlashDemoController < ApplicationController
   def success
     respond_to do |format|
       format.html do
-        flash[:success] = "✅ Success! Your action completed successfully."
+        flash[:success] = { message: "✅ Success! Your action completed successfully.", width: 600 }
         redirect_to flash_demo_path
       end
 
@@ -32,7 +32,7 @@ class FlashDemoController < ApplicationController
   def error
     respond_to do |format|
       format.html do
-        flash[:error] = "❌ Error! Something went wrong with your request."
+        flash[:error] = { message: "❌ Error! Something went wrong with your request.", width: 800 }
         redirect_to flash_demo_path
       end
 

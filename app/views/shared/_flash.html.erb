@@ -1,6 +1,21 @@
-<div id="flash-messages" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md px-4 space-y-2">
+<%
+  # Default width for all flash messages (in pixels)
+  # Change this value to adjust the default width for plain HTML flash messages
+  default_width = 448  # 448px = max-w-md
+%>
+
+<div id="flash-messages" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full px-4 space-y-2">
   <% flash.each do |type, message| %>
     <%
+      # Handle both string messages and hash messages with options
+      if message.is_a?(Hash)
+        message_text = message[:message] || message["message"]
+        width_px = message[:width] || message["width"] || default_width
+      else
+        message_text = message
+        width_px = default_width
+      end
+
       # Configure colors and icons based on flash type
       config = case type.to_sym
                when :notice, :success
@@ -46,6 +61,7 @@
       data-controller="flash"
       data-flash-duration-value="5000"
       data-action="mouseenter->flash#pause mouseleave->flash#resume"
+      style="max-width: <%= width_px %>px; margin: 0 auto;"
       class="<%= config[:bg] %> <%= config[:border] %> <%= config[:text] %> border rounded-lg shadow-lg p-4 flex items-start gap-3 opacity-0 translate-y-[-1rem] transition-all duration-500 ease-out"
     >
       <!-- Icon -->
@@ -57,7 +73,7 @@
 
       <!-- Message -->
       <div class="flex-1 pt-0.5">
-        <p class="text-sm font-medium"><%= message %></p>
+        <p class="text-sm font-medium"><%= message_text %></p>
       </div>
 
       <!-- Close button -->
