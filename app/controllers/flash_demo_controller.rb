@@ -9,42 +9,18 @@ class FlashDemoController < ApplicationController
 
   # POST /flash_demo/success
   def success
-    respond_to do |format|
-      format.html do
-        flash[:success] = { message: "✅ Success! Your action completed successfully.", width: 600 }
-        redirect_to flash_demo_path
-      end
-
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.append(
-          "flash-messages",
-          partial: "shared/flash_message",
-          locals: {
-            type: :success,
-            message: "✅ Success! (via Turbo Stream)"
-          }
-        )
-      end
-    end
+    flash_and_redirect(:success, "✅ Success! Your action completed successfully.", flash_demo_path, width: 600)
   end
 
   # POST /flash_demo/error
   def error
     respond_to do |format|
       format.html do
-        flash[:error] = { message: "❌ Error! Something went wrong with your request.", width: 800 }
-        redirect_to flash_demo_path
+        flash_and_render(:error, "❌ Error! Something went wrong with your request.", :index, width: 800)
       end
 
       format.turbo_stream do
-        render turbo_stream: turbo_stream.append(
-          "flash-messages",
-          partial: "shared/flash_message",
-          locals: {
-            type: :error,
-            message: "❌ Error! (via Turbo Stream)"
-          }
-        )
+        render turbo_stream: [ flash_turbo_stream(:error, "❌ Error! Something went wrong with your request.") ]
       end
     end
   end
@@ -53,19 +29,11 @@ class FlashDemoController < ApplicationController
   def warning
     respond_to do |format|
       format.html do
-        flash[:warning] = "⚠️ Warning! Please review your input carefully."
-        redirect_to flash_demo_path
+        flash_and_redirect(:warning, "⚠️ Warning! Please review your input carefully.", flash_demo_path, width: 600)
       end
 
       format.turbo_stream do
-        render turbo_stream: turbo_stream.append(
-          "flash-messages",
-          partial: "shared/flash_message",
-          locals: {
-            type: :warning,
-            message: "⚠️ Warning! (via Turbo Stream)"
-          }
-        )
+        render turbo_stream: [ flash_turbo_stream(:warning, "⚠️ Warning! Please review your input carefully.", width: 600) ]
       end
     end
   end
