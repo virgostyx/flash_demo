@@ -1,15 +1,25 @@
-module FlashHelper
-  # Generates a flash message that can be used in Turbo Stream responses
-  # 
-  # Usage in controller:
-  #   respond_to do |format|
-  #     format.turbo_stream do
-  #       render turbo_stream: turbo_stream.append("flash-messages", partial: "shared/flash_message",
-  #         locals: { type: :success, message: "Record saved successfully!" })
-  #     end
-  #   end
+class FlashMessageComponent < ViewComponent::Base
+  def initialize(type:, message:, width_px: nil, duration: 5000)
+    @type = type.to_sym
+    @duration = duration
+
+    if message.is_a?(Hash)
+      @message = message[:message] || message["message"]
+      @width_px = message[:width] || message["width"] || width_px || 448
+    else
+      @message = message
+      @width_px = width_px || 448
+    end
+
+    @config = flash_message_config(@type)
+  end
+
+  private
+
+  attr_reader :type, :message, :width_px, :duration, :config
+
   def flash_message_config(type)
-    case type.to_sym
+    case type
     when :notice, :success
       {
         bg: "bg-green-50",

@@ -22,7 +22,7 @@ module FlashMessages
   #   end
   #
   # Note: For Turbo Stream, you need to manually render with the flash stream
-  def set_flash(type, message, width: 448, duration: 5000, &block)
+  def set_flash(type, message, width: 448, duration: 5000)
     respond_to do |format|
       # HTML format - set flash and execute the block
       format.html do
@@ -86,13 +86,12 @@ module FlashMessages
   def flash_turbo_stream(type, message, width: 448, duration: 5000)
     turbo_stream.append(
       "flash-messages",
-      partial: "shared/flash_message",
-      locals: {
+      FlashMessageComponent.new(
         type: type,
         message: message,
         width_px: width,
         duration: duration
-      }
+      )
     )
   end
 

@@ -47,14 +47,7 @@ class FlashDemoController < ApplicationController
       end
 
       format.turbo_stream do
-        render turbo_stream: turbo_stream.append(
-          "flash-messages",
-          partial: "shared/flash_message",
-          locals: {
-            type: :info,
-            message: "ℹ️ Info (via Turbo Stream)"
-          }
-        )
+        render turbo_stream: [ flash_turbo_stream(:info, "ℹ️ Info (via Turbo Stream)") ]
       end
     end
   end
@@ -68,14 +61,7 @@ class FlashDemoController < ApplicationController
       end
 
       format.turbo_stream do
-        render turbo_stream: turbo_stream.append(
-          "flash-messages",
-          partial: "shared/flash_message",
-          locals: {
-            type: :notice,
-            message: "Notice: Standard Rails :notice (via Turbo Stream)"
-          }
-        )
+        render turbo_stream: [ flash_turbo_stream(:notice, "Notice: Standard Rails :notice (via Turbo Stream)") ]
       end
     end
   end
@@ -89,14 +75,7 @@ class FlashDemoController < ApplicationController
       end
 
       format.turbo_stream do
-        render turbo_stream: turbo_stream.append(
-          "flash-messages",
-          partial: "shared/flash_message",
-          locals: {
-            type: :alert,
-            message: "Alert: Standard Rails :alert (via Turbo Stream)"
-          }
-        )
+        render turbo_stream: [ flash_turbo_stream(:alert, "Alert: Standard Rails :alert (via Turbo Stream)") ]
       end
     end
   end
@@ -114,15 +93,7 @@ class FlashDemoController < ApplicationController
   def custom_duration
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.append(
-          "flash-messages",
-          partial: "shared/flash_message",
-          locals: {
-            type: :info,
-            message: "⏱️ This message will stay for 10 seconds!",
-            duration: 10000
-          }
-        )
+        render turbo_stream: [ flash_turbo_stream(:info, "⏱️ This message will stay for 10 seconds!", duration: 10000) ]
       end
     end
   end
@@ -131,15 +102,7 @@ class FlashDemoController < ApplicationController
   def quick_dismiss
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.append(
-          "flash-messages",
-          partial: "shared/flash_message",
-          locals: {
-            type: :warning,
-            message: "⚡ Quick! This disappears in 2 seconds!",
-            duration: 2000
-          }
-        )
+        render turbo_stream: [ flash_turbo_stream(:warning, "⚡ Quick! This disappears in 2 seconds!", duration: 2000) ]
       end
     end
   end
@@ -153,14 +116,7 @@ class FlashDemoController < ApplicationController
       end
 
       format.turbo_stream do
-        render turbo_stream: turbo_stream.append(
-          "flash-messages",
-          partial: "shared/flash_message",
-          locals: {
-            type: :info,
-            message: "This is a longer message to demonstrate how the flash component handles text that spans multiple lines. It should still look great and be fully readable with proper spacing and formatting."
-          }
-        )
+        render turbo_stream: [ flash_turbo_stream(:info, "This is a longer message to demonstrate how the flash component handles text that spans multiple lines. It should still look great and be fully readable with proper spacing and formatting.") ]
       end
     end
   end

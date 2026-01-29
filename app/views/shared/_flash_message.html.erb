@@ -1,40 +1,10 @@
 <%
-  # Default values
+  # This partial is now a wrapper for the FlashMessageComponent
+  # to maintain backward compatibility with any direct partial calls.
   type ||= :info
   message ||= ""
   duration ||= 5000
-  width_px ||= 448  # Default 448px (equivalent to max-w-md)
-
-  config = flash_message_config(type)
+  width_px ||= 448
 %>
 
-<div
-  data-controller="flash"
-  data-flash-duration-value="<%= duration %>"
-  data-action="mouseenter->flash#pause mouseleave->flash#resume"
-  style="max-width: <%= width_px %>px;margin: 0 auto;"
-  class="w-full <%= config[:bg] %> <%= config[:border] %> <%= config[:text] %> border rounded-lg shadow-lg p-4 flex items-start gap-3 opacity-0 translate-y-[-1rem] transition-all duration-500 ease-out"
->
-  <!-- Icon -->
-  <div class="<%= config[:icon_bg] %> rounded-lg p-2 flex-shrink-0">
-    <svg class="w-5 h-5 <%= config[:icon_color] %>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<%= config[:icon_path] %>"/>
-    </svg>
-  </div>
-
-  <!-- Message -->
-  <div class="flex-1 pt-0.5">
-    <p class="text-sm font-medium"><%= message %></p>
-  </div>
-
-  <!-- Close button -->
-  <button
-    data-action="click->flash#close"
-    class="flex-shrink-0 <%= config[:text] %> hover:opacity-70 transition-opacity"
-    type="button"
-  >
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-    </svg>
-  </button>
-</div>
+<%= render FlashMessageComponent.new(type: type, message: message, duration: duration, width_px: width_px) %>
